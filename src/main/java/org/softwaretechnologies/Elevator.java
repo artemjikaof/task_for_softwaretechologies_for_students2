@@ -23,7 +23,7 @@ public final class Elevator {
      * Создает лифт, который передвигается между lowestFloor и highestFloor
      * включительно.
      * Если lowestFloor отрицательный, то нулевой этаж существует.
-     * Если lowestFloor -3 то в здании три уровня подземной парковки.
+     * Если lowestFloor -3, то в здании три уровня подземной парковки.
      *
      * @param highestFloor Самый верхний этаж, на который может подняться лифт
      * @param lowestFloor Самый нижний этаж, на который может опуститься лифт
@@ -71,7 +71,19 @@ public final class Elevator {
      * @param floor этаж, на который должен переместиться лифт
      */
     public void goToExactFloor(int floor) {
-       // TODO: реализуйте вышеуказанную функцию
+       if(floor < lowestFloor || floor > highestFloor){
+           System.out.println("Указан неверный этаж");
+           return;
+       }
+       while (currentFloor != floor){
+           System.out.println("Текущий этаж: " + currentFloor);
+           if (currentFloor < floor){
+               goUp();
+           } else if (currentFloor > floor){
+               goDown();
+           }
+       }
+       System.out.println("Вы достигли указанного этажа: "+ currentFloor);
     }
 
     /**
