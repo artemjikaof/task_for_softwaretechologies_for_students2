@@ -26,16 +26,27 @@ public class Money {
      */
     @Override
     public boolean equals(Object o) {
-        if(this == o) return true;//если один и тоже объект
-        if(o == null || getClass() != o.getClass())return false;//проверка является ли объект экземпляром класса Money
+        if (this == o){
+            return true; // Проверка на идентичность
+        }
+        if (!(o instanceof Money)) // Проверка на класс
+            return false;
 
-        Money object = (Money) o;//поняли, что объект это экземпляр Money и привели тип
+        Money otherMoney = (Money) o;
 
-        //округляем в большую или в меньшую сторону
-        BigDecimal thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
-        BigDecimal objectMoney = object.amount.setScale(4,RoundingMode.HALF_UP);
+        if(otherMoney.type != this.type) // Проверка на различие типов
+            return false;
 
-        return thisMoney.equals(objectMoney) && this.type == object.type;
+        if(otherMoney.amount == null && this.amount == null) // Проверка на null у двух объектов сразу
+            return true;
+
+        if (otherMoney.amount == null || this.amount == null) // Если один из amount = null, то не false
+            return false;
+
+        BigDecimal scale1 = this.getAmount().setScale(4, RoundingMode.HALF_UP);
+        BigDecimal scale2 = otherMoney.getAmount().setScale(4, RoundingMode.HALF_UP);
+
+        return scale1.compareTo(scale2) == 0;
     }
 
     /**
@@ -55,18 +66,28 @@ public class Money {
      */
     @Override
     public int hashCode() {
-        if (amount == null) return 5;
-        BigDecimal scaledAmount = amount.setScale(4, RoundingMode.HALF_UP);
-        long hashBase = scaledAmount.multiply(BigDecimal.valueOf(10000)).longValue();
-        int typeCode = switch (type) {
-            case USD -> 1;
-            case EURO -> 2;
-            case RUB -> 3;
-            case KRONA -> 4;
-            default -> 5;
-        };
-        long hashValue = hashBase + typeCode;
-        return hashValue >= (MAX_VALUE - 5) ? MAX_VALUE : (int) hashValue;
+        if (this.amount == null) return 10000;
+
+        BigDecimal money = this.amount.setScale(4, RoundingMode.HALF_UP);
+        money = money.multiply(BigDecimal.valueOf(10_000));
+
+        if (this.type == null) {
+            money = money.add(BigDecimal.valueOf(5));
+        }
+        else {
+            money = switch (this.type) {
+                case RUB -> money.add(BigDecimal.valueOf(3));
+                case USD -> money.add(BigDecimal.valueOf(1));
+                case EURO -> money.add(BigDecimal.valueOf(2));
+                case KRONA -> money.add(BigDecimal.valueOf(4));
+            };
+        }
+
+        if (money.compareTo(BigDecimal.valueOf(MAX_VALUE - 5)) >= 0) // Проверка на выход за MAX_VALUE
+            return MAX_VALUE;
+
+        return money.intValue();
+
     }
 
     /**
@@ -88,15 +109,15 @@ public class Money {
      */
     @Override
     public String toString() {
-        if (type == null && amount == null) {
-            return "null: null";
-        } else if (type == null) {
-            return "null: " + amount.setScale(4, RoundingMode.HALF_UP).toString();
-        } else if (amount == null) {
-            return type.toString() + ": null";
-        } else {
-            return type.toString() + ": " + amount.setScale(4, RoundingMode.HALF_UP).toString();
-        }
+        String typeString = "null";
+        String num = "null";
+        if (this.amount != null)
+            num = this.amount.setScale(4, RoundingMode.HALF_UP).toString();
+
+        if (this.type != null)
+            typeString = this.type.toString();
+
+        return typeString + ": " + num;
     }
 
     public BigDecimal getAmount() {
@@ -115,3 +136,4 @@ public class Money {
         System.out.println(money.equals(money1));
     }
 }
+
