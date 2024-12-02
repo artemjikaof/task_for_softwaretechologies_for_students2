@@ -9,9 +9,13 @@ public class ExceptionTask {
        Вызвана функция printMessage
      */
     public static void printMessage() {
-        throwRuntimeException();
+       //throwRuntimeException();
         // TODO: реализуйте вышеуказанную функцию
-        System.out.println("Вызвана функция printMessage");
+        try {
+            throwRuntimeException();
+        }catch (Exception s){
+            System.out.println("Вызвана функция printMessage");
+        }
 
     }
 
@@ -21,9 +25,13 @@ public class ExceptionTask {
      Вызвана функция printMessage2
      */
     public static void printMessage2() throws Exception {
-        throwCatchableException();
+        //throwCatchableException();
         // TODO: реализуйте вышеуказанную функцию
-        System.out.println("Вызвана функция printMessage2");
+        try {
+            throwCatchableException();
+        }catch (Exception e){
+            System.out.println("Вызвана функция printMessage2");
+        }
     }
 
     private static void throwCatchableException() throws Exception {
@@ -61,13 +69,11 @@ public class ExceptionTask {
      */
     public static Optional<String> mergeStrings(String first, String second) {
         // TODO: реализуйте вышеуказанную функцию
-        if(first == null && second == null){
+        if(first==null&&second==null){
             return Optional.empty();
-        }
-        if (first == null){
+        }else if(first==null) {
             return Optional.of(second);
-        }
-        if (second == null){
+        }else if(second==null){
             return Optional.of(first);
         }
 
