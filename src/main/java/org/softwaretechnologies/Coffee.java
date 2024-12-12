@@ -1,9 +1,16 @@
 package org.softwaretechnologies;
-// TODO: 09.12.2024 Создайте класс базового Coffee, поддерживающий интерфейс CoffeeInterface
-//  cтоимость базового напитка равна 50.
-//  описание "only coffee"
 
-public class Coffee {
+public class Coffee implements CoffeeInterface {
+    private static final int BASE_COST = 50;
+    private static final String DESCRIPTION = "only cofe";
 
+    @Override
+    public int getCost() {
+        return BASE_COST;
+    }
 
+    @Override
+    public String description() {
+        return DESCRIPTION;
+    }
 }

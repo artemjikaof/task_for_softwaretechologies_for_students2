@@ -1,12 +1,20 @@
 package org.softwaretechnologies;
 
+public class SugarCoffee implements CoffeeInterface {
+    private final CoffeeInterface coffee;
+    private static final int SUGAR_COST = 20;
 
-// TODO: 09.12.2024 /**
-//     Создайте класс SugarCoffee, поддерживающий интерфейс CofeIntrface
-//     к стоимости базового напитка добавьте 20.
-//     к описанию добавьте " + sugar"
-//     */
+    public SugarCoffee(CoffeeInterface coffee) {
+        this.coffee = coffee;
+    }
 
-public class SugarCoffee {
+    @Override
+    public int getCost() {
+        return coffee.getCost() + SUGAR_COST; // Добавить стоимость сахара
+    }
 
+    @Override
+    public String description() {
+        return coffee.description() + " + sugar"; // Добавить к описанию
+    }
 }

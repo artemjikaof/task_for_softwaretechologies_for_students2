@@ -7,6 +7,5 @@ public interface CoffeeInterface {
     //  для возврата стоимости int getCost();
     //  для описания кофе String description();
     int getCost();
-
     String description();
 }

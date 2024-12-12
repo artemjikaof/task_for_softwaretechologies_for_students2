@@ -1,10 +1,21 @@
 package org.softwaretechnologies;
 
-// TODO: 09.12.2024 Создайте класс MilkCoffee, поддерживающий интерфейс CofeIntrface
-//  к стоимости базового напитка добавьте 10.
-//  к описанию добавьте " + milk"
+public class MilkCoffee implements CoffeeInterface {
+    private final CoffeeInterface coffee;
+    private static final int MILK_COST = 10;
 
-public class MilkCoffee {
+    // Конструктор, принимающий CofeInterface
+    public MilkCoffee(CoffeeInterface coffee) {
+        this.coffee = coffee;
+    }
 
+    @Override
+    public int getCost() {
+        return coffee.getCost() + MILK_COST;
+    }
 
+    @Override
+    public String description() {
+        return coffee.description() + " + milk";
+    }
 }
