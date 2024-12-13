@@ -33,9 +33,11 @@ public class Zoo {
         List<String> sounds = new ArrayList<>();
 
         // Сортировка animalList по имени животного
-        animalList.stream()
-                .sorted(Comparator.comparing(Animal::getName))
-                .forEach(animal -> sounds.add(animal.sound()));
+
+        animalList.sort(Comparator.comparing(Animal::getName));
+        animalList.forEach(animal -> sounds.add(animal.sound()));
+
+
 
         return sounds;
     }
