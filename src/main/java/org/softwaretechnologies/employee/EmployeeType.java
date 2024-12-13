@@ -11,6 +11,10 @@ public enum EmployeeType {
     Формула вычисления зп: если месяц четный, то baseSalary, иначе baseSalary/2
      */
     Manager{
+        @Override
+        public Employee create(String name, int baseSalary){
+            return new Manager(name,baseSalary);
+        }
 
     },
 
@@ -18,6 +22,10 @@ public enum EmployeeType {
     Формула вычисления зп: всегда baseSalary
      */
     Programmer{
+        @Override
+        public Employee create(String name, int baseSalary) {
+            return new Programmer(name, baseSalary);
+        }
 
     },
     /*
@@ -25,7 +33,11 @@ public enum EmployeeType {
     Вычисление количества дней в месяце: YearMonth.of(LocalDate.now().getYear(), month).lengthOfMonth()
      */
     Tester{
-
+        @Override
+        public Employee create(String name, int baseSalary) {
+            return new Tester(name, baseSalary);
+        }
     };
+    public abstract Employee create(String name, int baseSalary);
 
 }
